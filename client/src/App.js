@@ -2,20 +2,24 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 import Home from './pages/HomePage/HomePage';
 import styles from './styles/App.module.css';
+// import { Sign } from 'crypto';
 
 function App() {
   return (
     <BrowserRouter>
       <div className={styles.app}>
         <header className={styles.appHeader}>
-          <img src="/project-logo.png" alt="Logo" className={styles.appLogo} />
+          <img src="/LogoFitness.png" alt="Logo" className={styles.appLogo} />
           <nav className={styles.appNav}>
             <Link to="/" className={styles.appLink}>Home</Link>
+            <Link to="/signIn" className={styles.appLink}>signIn</Link>
           </nav>
         </header>
         <main className={styles.main}>
           <Routes>
             <Route path="/" element={<Home />} />
+            {/* <Routh path="/" element={<SignIn/>}/> */}
+            
           </Routes>
         </main>
         <footer className={styles.footer}>
