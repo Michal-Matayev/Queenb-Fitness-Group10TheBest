@@ -1,0 +1,61 @@
+.container{
+    flex:1;
+    height: 100%;
+    display: flex;
+    /* background:rgba(0, 225, 255, 0.265); */
+}
+
+
+.right{
+    flex:1;
+    /* background:rgba(0, 225, 255, 0.265); */
+    position: relative;
+    flex-direction: column;
+    padding: 40px;
+    gap:16px;
+    align-items: center;
+    justify-content: center;
+}
+
+.textButton{
+    cursor:pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    font-size:16px;
+    background-color: aqua;
+}
+
+.left{
+    flex:1;
+    position: relative;
+}
+
+.image{
+    position:relative;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.text{
+    font-size:16px;
+    text-align: center;
+    margin-top:16px;
+
+}
+
+@media (max-width:700px) {
+.container{
+    flex-direction: column;
+}
+.left{
+    display: none;
+    position: relative;
+}
+
+.text{
+    font-size:14px;
+}
+
+
+}

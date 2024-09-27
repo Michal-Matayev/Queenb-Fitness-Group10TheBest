@@ -1,10 +1,90 @@
+/* body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Arial', sans-serif;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
 .home {
   text-align: center;
+  padding: 50px;
+  max-width: 800px;
+  margin: auto;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+} */
+
+
+
+.home {
+  position: relative;
+  min-height: 100vh;
+  /* background-image: url('exercise-woman-running.jpg'); */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 1.5; /*שקיפות של התמונה
+  */
+  z-index: 1;
+}
+
+
+.container{
+  flex:1;
+  position: relative;
+}
+
+.image{
+  position:relative;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+
+.headline {
+  font-size: 3em;
+  color: #5A5A89;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.subheadline {
+  font-size: 1.5em;
+  color: #7A7A99;
+  margin-bottom: 30px;
+}
+
+.benefits {
+  text-align: left;
+  color: #53474F;
+  font-size: 1.2em;
+  line-height: 1.8em;
+  max-width: 600px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   padding: 20px;
 }
 
-.headline {
-  font-size: 2em;
-  margin-bottom: 20px;
-  color: #53474F;
+.benefit-item {
+  opacity: 0;
+  transform: translateX(-100px);
+  margin: 10px 0;
+  padding: 10px;
+  background: #F5F5F5;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: all 0.6s ease-in-out;
+}
+
+.benefit-item.show {
+  opacity: 1;
+  transform: translateX(0);
 }

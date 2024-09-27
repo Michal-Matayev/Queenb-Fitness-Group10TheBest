@@ -2,23 +2,45 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 import Home from './pages/HomePage/HomePage';
 import styles from './styles/App.module.css';
+import Authentication from './pages2/Authentication/Authentication';
 // import { Sign } from 'crypto';
 
 function App() {
+
+  // const [user, setUser] = useState(true);
   return (
     <BrowserRouter>
+      
+
+
+      {/* {user ? (
+        <div  className={styles.Container}></div>
+      ) : (
+          <div className={styles.Container}></div>
+      )}
+       */}
+      
+      
+
+
+
       <div className={styles.app}>
         <header className={styles.appHeader}>
           <img src="/LogoFitness.png" alt="Logo" className={styles.appLogo} />
+
+          
           <nav className={styles.appNav}>
             <Link to="/" className={styles.appLink}>Home</Link>
-            <Link to="/signIn" className={styles.appLink}>signIn</Link>
+            <Link to="/logIn" className={styles.appLink}>LogIn</Link>
           </nav>
         </header>
         <main className={styles.main}>
           <Routes>
+
+
+            <Route path="/logIn" element={<Authentication/>}/>
+
             <Route path="/" element={<Home />} />
-            {/* <Routh path="/" element={<SignIn/>}/> */}
             
           </Routes>
         </main>
