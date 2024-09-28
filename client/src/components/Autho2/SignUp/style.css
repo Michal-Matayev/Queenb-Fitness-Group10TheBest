@@ -1,0 +1,150 @@
+/*sign up*/
+
+
+
+.formBody {
+  height: 70%;
+}
+
+.formFooter {
+  height: 100px;
+}
+
+  /* }
+.headerActive {
+  margin: 0px;
+  padding: 0px;
+  display: inline-block;
+  width: 50%;
+  height: 100%;
+  background-color: #3f3f3f;
+  color: #d8d9de !important;
+}
+.headerInActive {
+  margin: 0px;
+  padding: 0px;
+  display: inline-block;
+  width: 50%;
+  height: 100%;
+  background-color: #9dd3ec;
+  color: #3f3f3f;
+  transition: all 0.3s ease;
+}
+.headerInActive:hover {
+  background-color: #3f3f3f;
+}
+.headerButton {
+  outline: none;
+  border: none;
+  font-family: "Roboto Mono", monospace;
+  font-size: 20px;
+  background-color: transparent;
+  transition: all 0.5s ease;
+  padding-top: 10px;
+  color: #d8d9de;
+  z-index: 12;
+}
+.headerText {
+  margin-top: 5px;
+  margin-bottom: 25px;
+  z-index: 12;
+} */
+.inputSection input {
+  outline: none;
+  border: none;
+  background-color: transparent;
+  height: 40px;
+  border-bottom: 2px solid #9dd3ec;
+  color: #d8d9de;
+  font-size: 18px;
+}
+.inputSectionSplit input {
+  outline: none;
+  border: none;
+  background-color: transparent;
+  height: 40px;
+  border-bottom: 2px solid #9dd3ec;
+  color: #d8d9de;
+  font-size: 18px;
+}
+
+
+
+.inputSectionSplit {
+  margin-bottom: 25px;
+  width: 45%;
+  display: inline-block;
+  
+}
+.inputSection {
+  margin-bottom: 25px;
+  width: 90%;
+  margin: auto;
+  margin-bottom: 25px;
+}
+
+.firstName {
+  width: 100%;
+  display: block;
+  transition: 0.3s ease all;
+}
+.lastName {
+  width: 100%;
+  display: block;
+  transition: 0.3s ease all;
+}
+.inputLabel {
+  pointer-events: none;
+  display: block;
+  font-size: 18px;
+  color: #d8d9de;
+  transform: translateY(-25px);
+  transition: 0.4s ease all;
+  text-align: left;
+}
+.emailAddress {
+  width: 100%;
+  display: block;
+  transition: 0.3s ease all;
+}
+.password {
+  width: 100%;
+  display: block;
+  transition: 0.3s ease all;
+}
+.userName {
+  width: 100%;
+  display: block;
+  transition: 0.3s ease all;
+}
+/* 
+.firstName:focus + .inputLabel {
+  transform: translateY(5px);
+}
+.firstName:valid + .inputLabel {
+  transform: translateY(5px);
+}
+.lastName:focus + .inputLabel {
+  transform: translateY(5px);
+}
+.lastName:valid + .inputLabel {
+  transform: translateY(5px);
+}
+.emailAddress:focus + .inputLabel {
+  transform: translateY(5px);
+}
+.emailAddress:valid + .inputLabel {
+  transform: translateY(5px);
+}
+.password:focus + .inputLabel {
+  transform: translateY(5px);
+}
+.password:valid + .inputLabel {
+  transform: translateY(5px);
+}
+.userName:focus + .inputLabel {
+  transform: translateY(5px);
+}
+.userName:valid + .inputLabel {
+  transform: translateY(5px);
+} */
