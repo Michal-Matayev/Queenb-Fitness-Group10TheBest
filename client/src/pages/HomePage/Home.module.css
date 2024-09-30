@@ -43,27 +43,58 @@
   width: 100%;
   object-fit: cover;
 }
+.textContainer {
+  position: absolute;
+  top: 20%;
+  left: 0;
+  width: 100%;
+  text-align: left;
+  padding: 20px;
+}
 
 
-.headline {
+.headline1 {
   font-size: 3em;
-  color: #5A5A89;
+  color: #eaeaee;
   margin-bottom: 10px;
   text-transform: uppercase;
   font-weight: bold;
   letter-spacing: 2px;
+  animation: slideLeft 4s ease-in-out forwards;
+
+}
+
+.headline2 {
+  font-size: 3em;
+  color: #eaeaee;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 2px;
+  animation: slideLeft 7s ease-in-out forwards;
+
 }
 
 .subheadline {
-  font-size: 1.5em;
-  color: #7A7A99;
+  font-size:4em;
+  color: #254fbb9c;
   margin-bottom: 30px;
+}
+
+
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  width: 100%;
 }
 
 .benefits {
   text-align: left;
   color: #53474F;
-  font-size: 1.2em;
+  font-size: 1.3em;
   line-height: 1.8em;
   max-width: 600px;
   margin: auto;
@@ -87,4 +118,84 @@
 .benefit-item.show {
   opacity: 1;
   transform: translateX(0);
+}
+
+
+
+@keyframes slideLeft {
+  0% {
+    left: 100%; /* מתחיל מימין מחוץ למסך */
+    opacity: 0;
+  }
+  50% {
+    left: -10%; /* זז קצת מעבר לשמאל */
+    opacity: 1;
+  }
+  100% {
+    left: 0; /* מיקום סופי */
+  }
+}
+
+
+/* --- מדיה קווריז (Media Queries) להתאמה רספונסיבית --- */
+@media (max-width: 1024px) {
+  /* עיצוב למסכים בינוניים כמו טאבלטים */
+  .headline1, .headline2 {
+    font-size: 2.5em; /* הקטנת גודל הכותרת */
+  }
+
+  .subheadline {
+    font-size: 1.2em; /* הקטנת גודל כותרת המשנה */
+  }
+
+  .textContainer {
+    left: 5%; /* התאמת מיקום הטקסט */
+  }
+
+  .image {
+    height: auto;
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  /* עיצוב למסכים קטנים יותר */
+  .headline1, .headline2 {
+    font-size: 2em; /* הקטנת גודל הכותרת */
+  }
+
+  .subheadline {
+    font-size: 1em; /* הקטנת גודל כותרת המשנה */
+  }
+
+  .textContainer {
+    left: 5%; /* התאמת מיקום הטקסט */
+    top: 20px; /* הזזת הכותרת למעלה במסך קטן */
+  }
+
+  .image {
+    height: auto;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  /* עיצוב למסכים קטנים מאוד כמו טלפונים ניידים */
+  .headline1, .headline2 {
+    font-size: 0.7em; /* הקטנת גודל הכותרת */
+  }
+
+  .subheadline {
+    font-size: 0.8em; /* הקטנת גודל כותרת המשנה */
+  }
+
+  .textContainer {
+    left: 2%; /* התאמת מיקום הכותרת */
+    top: 50px; /* מיקום טקסט */
+  }
+
+  .image {
+    height: auto;
+    width: 100%; /* התאמת גודל התמונה למסך קטן */
+  }
 }

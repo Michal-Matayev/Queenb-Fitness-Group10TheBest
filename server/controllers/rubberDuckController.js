@@ -55,7 +55,7 @@ const deleteDuck = async (req, res) => {
         const duck = await RubberDuck.findByIdAndDelete(id);
         res.status(200).json({duck});
     } catch (err) {
-        res.status(400).json({mssg: 'error deleting duck', err})
+        res.status(400).json({mssg: 'error deleting duck***********************', err})
     }
 }
 

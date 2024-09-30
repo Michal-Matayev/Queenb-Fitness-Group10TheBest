@@ -8,8 +8,12 @@ const Home = () => {
         <img src="exercise-woman-running.jpg" alt="backgroundRunWoman" className={styles.image} />
 
         {/* כיתוב על גבי התמונה */}
+        <div className={styles.mainContainer}>
+
         <div className={styles.textContainer}>
-          <h1 className={styles.headline}>Be Healthy On The Way To Happiness</h1>
+          <h1 className={styles.headline1}> 🤍  Be Healthy On </h1>
+          <h1 className={styles.headline2}>The Way To Happiness  🤍</h1>
+        </div>
           <h2 className={styles.subheadline}>The Benefits of Fitness</h2>
           <div className={styles.benefits}>
             <div className={styles.benefitItem}>1. Boosts Energy Levels - Enhances stamina and reduces fatigue.</div>
@@ -23,7 +27,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-    </div>
+      </div>
   );
 };
 

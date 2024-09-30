@@ -1,50 +1,42 @@
-//include the routes file
-//var exercise = require('./routes/exerciseRoute');
-//var lang = require('./routes/langRoute');
-//var user = require('./routes/userRoute');
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const dotenv = require('dotenv');
 
+// ייבוא קובצי הנתיבים
+const signInRoutes = require('./routes/signIn');  // נתיב הכניסה הקיים
+const signUpRoutes = require('./routes/signUp');  // נתיב הרישום החדש
 
-const express = require("express"),
-  app = express(),
-  PORT = process.env.PORT || 5000,
-  //npm install cors
-  //npm install cors --save
-  cors = require("cors");
-require("dotenv").config({ path: ".env" });
+dotenv.config();
 
-//->we set db once and after put this kine in comments
-//require("./DL/scripts_data/script_setDB.js");
+// Constants
+const PORT = process.env.PORT;
 
+// Create Express server
+const app = express();
 
+// Middleware
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: process.env.CLIENT_URL
+}));
 
-require("./router")(app);
-//require('./routes')(app);
+app.use((req, res, next) => {
+  console.log(req.path, req.method);
+  next();
+});
 
-//app.use('/user',user);
-//app.use('/exercise',exercise);
-//app.use('/lang',lang);
+// Routes
+app.use('/api/signIn', signInRoutes);  // הגדרת נתיב /api/signIn
+app.use('/api/signUp', signUpRoutes);  // הגדרת נתיב /api/signUp  <-- הוספנו את נתיב הרישום החדש
 
-
-app.listen(PORT, () => console.log(`server is running in port ${PORT}`));
-console.log("in server.js");
-
-//to run:
-//npm i dotenv
-//npm i express
-//mpm i mongoose
-//node '.\server.js'  ->run also db-connections
-
-// server
-// => router -app.post
-// =>bl/logicControllers/exerciseLogic-  create
-// => dl/controllers/ExerciseController - create
-// =>dl/Models/exersicemodele - create
-
-// index
-// => router -app.get
-//if params-  =>bl/logicControllers/exerciseLogic-  read
-//if not params  =>bl/logicControllers/generallogic- getSingleExercise  -> exerciseLogic-  read
-// => dl/controllers/ExerciseController - read
-// =>dl/Models/exersicemodele - read
+// Connect to MongoDB
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => {
+    // listen for requests
+    app.listen(PORT, () => {
+      console.log('connected to mongoDB & listening on port', PORT);
+    });
+  }).catch((err) => {
+    console.log(err);
+  });
