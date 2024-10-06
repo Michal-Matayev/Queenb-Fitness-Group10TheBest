@@ -1,91 +1,71 @@
-// const exerciseController = require("../../DL/Controllers/exerciseController");
-const exerciseController = require("../../DL/Controllers/exerciseController");
-const ExerciseController = require("../../DL/Controllers/exerciseController");
-// const GeneralLogic = require("../BL/Logic/generalLogic");
+// BL/Logic/exerciseLogic.js
+const axios = require('axios');
+const Exercise = require("../../DL/models/ExerciseModel");
 
-// async function create(data) {
-//   console.log("in exersiceLogic.js in create");
 
-//   return ExerciseController.create(data);
-// }
-
-// async function readAllExercisesInLang(langName) {
-//   let exercises = ExerciseController.read();
-//   return Object.values(exercises).filter((val) => val.prog_lang === langName);
-//   // return ExerciseController.read();
-// }
-async function read(filter={}, projection = {})
-{
-  //console.log(token);
-  return ExerciseController.read(filter, projection)
+// Function to fetch exercises from the API
+async function fetchExercisesFromAPI() {
+    try {
+        const response = await axios.get('https://wger.de/api/v2/exercise/'); // Replace with actual API
+        return response.data.results; // Assuming the exercises are inside results array
+    } catch (error) {
+        console.error('Error fetching exercises from API:', error);
+        throw error;
+    }
 }
 
-async function updateLastSeenById(id, data) {
-  data.lastSeen = Date.now();
-  return ExerciseController.updateExersiceById(data._id, data);
-}
-async function del(id,token)
-{
-  return await ExerciseController.delete(id,token);
+async function fetchAndSaveExercises() {
+    try {
+        const exercisesFromAPI = await fetchExercisesFromAPI();
+
+        for (const exercise of exercisesFromAPI) {
+            // Check if description is provided; set a default if not
+            const description = exercise.description || 'No description available'; // Default value if missing
+
+            const mappedExercise = {
+                name: exercise.name,
+                description, // Use the validated description
+                category: exercise.category,
+                targetMuscleGroups: exercise.muscles,
+                duration: exercise.time || 30,
+                difficulty: exercise.level ? exercise.level.toLowerCase() : 'easy', // Normalize difficulty
+            };
+
+            // Save each exercise to the database
+            await Exercise.create(mappedExercise);
+        }
+    } catch (error) {
+        console.error('Error adding exercises:', error);
+        throw error;
+    }
 
 }
-//@@
-async function update(idEx, data,token) {
 
-  if (!idEx ||!token) throw "missing data";
-  // if(!exerciseController.getTokenStatus(token))
-  // {
-  //   console.log('token unouthorized, you need to login again');
-  //   throw 'token unouthorized, you need to login again'
+async function getAllExercises(filter) {
+    const query = {};
 
-  // }
-  
+    // Match difficulty if provided
+    if (filter.difficulty) {
+        query.difficulty = filter.difficulty; // Assuming 'difficulty' is a field in your model
+    }
 
-  const foundExercise = await ExerciseController.read({ _id: `${idEx}` });
-  //console.log(foundExercise);
+    // Match date if provided
+    if (filter.date) {
+        const date = new Date(filter.date);
+        query.date = { $gte: date }; // Assuming 'date' is a field in your model
+    }
 
-  if (!foundExercise) throw `we don't find this id`;
+    // Match other filters if provided (e.g., category, intensity, etc.)
+    if (filter.category) {
+        query.category = filter.category; // Assuming 'category' is a field in your model
+    }
 
-  const {
-    icon,
-    title,
-    details,
-    exec_type,
-    difficulty,
-    status,
-    prog_lang,
-    tags,
-    content,
-    solution,
-  } = data;
-  const newData = {
-    icon,
-    title,
-    details,
-    exec_type,
-    difficulty,
-    status,
-    prog_lang,
-    tags,
-    content,
-    solution,
-  };
-  console.log(newData);
+    // Add more filters as needed...
 
-  let filteredData = {};
-  for (let key in newData) {
-    if (newData[key]) filteredData[key] = newData[key];
-  }
-console.log(filteredData);
-  return await ExerciseController.updateExersiceById(idEx, filteredData,token);
+    return await Exercise.find(query);
 }
 
 module.exports = {
-  ...ExerciseController,
-  //create,
-  read,
-  //readAllExercisesInLang,
-  updateLastSeenById,
-  update,
-  del
+    getAllExercises,fetchAndSaveExercises
 };
+

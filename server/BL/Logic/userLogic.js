@@ -1,79 +1,70 @@
+
+// const bcryptjs = require("bcryptjs");
+// const { createToken, verifyToken } = require("../Middleware/jwt");
+// const UserController = require("../../DL/Controllers/userController");
+
 const bcryptjs = require("bcryptjs");
-// npm i bcryptjs
-const UserController = require("../../DL/Controllers/userController");
-
-async function read(filter) {
-  return await UserController.read(filter);
-}
-
-async function readOne(filter, projection) {
-  return UserController.readOne(filter, projection);
-}
+const UserModel = require("../../DL/models/UserModel");
+const { createToken } = require("../Middleware/jwt");
 
 async function create(data) {
-  console.log("in create");
-  if (!data.email?.includes("@")) throw "you forgot to put @";
+    console.log("in create");
+    return await UserModel.create(data);
+}
 
-  return UserController.create(data);
+
+
+async function update(_id, data) {
+    return await UserModel.findByIdAndUpdate(_id, data, {
+        new: true,
+        runValidators: true,
+    });
+}
+
+async function deleteUser(_id) {
+    return await UserModel.findByIdAndDelete(_id);
 }
 
 async function register(data) {
-  console.log("in register");
+    console.log(`in register logic ${data} `);
+    if (!data.firstName) throw `'firstName' is required`;
+    if (!data.lastName) throw `'lastName' is required`;
 
-  const { firstName, lastName, password } = data;
-  console.log(firstName);
-  console.log(lastName);
+    data.password = bcryptjs.hashSync(data.password, 10); // Hash the password
 
-  if (!data.firstName) throw `'firstName' is required`;
-  if (!data.lastName) throw `'lastName' is required`;
-
-  data.name = `${firstName} ${lastName}`;
-  data.password = bcryptjs.hashSync(password, 10); // add salt rounds for security
-
-  return await create(data);
+    return await create(data);
 }
 
 async function login(data) {
-  console.log("in login");
-  const { email, password } = data;
+    const { email, password } = data;
 
-  // Fetch user with the specified email and include password for verification
-  let user = (await UserController.read({ email }, '+password'))[0]; // projection to include password
-  console.log(user);
+    // Fetch user by email
+    const user = await read({ email }, '+password');
 
-  if (!user) throw 'Failed to login';
-  
-  // Compare provided password with stored hashed password
-  if (!bcryptjs.compareSync(password, user.password)) {
-    throw 'Email or password invalid';
-  }
+    // Check if user is found and if the password is correct
+    if (!user || !bcryptjs.compareSync(password, user.password)) {
+        throw 'Invalid email or password';
+    }
 
-  user.lastSeen = Date.now();
-  // Update last seen time
-  await update(user._id, user);
-  
-  // Return user information without token
-  const { password: _, ...userWithoutPassword } = user; // Exclude password from the result
-  return userWithoutPassword;
+    // Generate JWT token
+    const token = createToken(user._id);
+
+    // Return user info and token
+    return { ...user._doc, token };
 }
 
-async function update(id, data) {
-  data.lastSeen = Date.now();
-  return UserController.update(id, data);
+async function read(filter = {}, projection) {
+    return await UserModel.findOne(filter, projection);
 }
 
 async function readAllUsersData() {
-  console.log("Fetching all users data");
-  return await UserController.read({}, { name: 1, email: 1, permission: 1 });
+    return await read({});
 }
 
 module.exports = {
-  ...UserController,
-  create,
-  update,
-  register,
-  login,
-  read,
-  readAllUsersData
-  //readOne
+    register,
+    login,
+    readAllUsersData,
+    update,
+    deleteUser,
 };

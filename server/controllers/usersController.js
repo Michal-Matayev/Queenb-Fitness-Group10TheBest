@@ -8,6 +8,7 @@ const signIn = async (req, res) => {
         // חיפוש משתמש לפי אימייל
         const user = await users.findOne({ email });
         if (!user) {
+            console.log("user",user)
             return res.status(404).json({ message: 'User not found. Please sign up.' });
         }
 
@@ -35,10 +36,8 @@ const signUp = async (req, res) => {
         }
 
         // יצירת משתמש חדש
-        const newUser = new users({ email, password });
-
-        // שמירת המשתמש החדש במאגר
-        await newUser.save();
+       const newUser = await users.create({ email , password })
+        
 
         // החזרת תשובה מוצלחת
         res.status(201).json({ message: 'User registered successfully!', newUser });

@@ -1,38 +1,46 @@
-require("../db-connection");
-const userModel = require("../Models/UserModel");
+ const userModel = require("../models/UserModel");
+ const userLogic = require("../../BL/Logic/userLogic");
 
-// const newUserModel = {
-//   userName: "Nava",
-//   password: "1234",
-//   Permissions: "user",
-//   email: "aaa@gmail.com",
-//   profileImg: "ligkhj",
-// };
+ async function register(req, res) {
+  console.log('in register controller');
+  console.log('Request body:', req.body); // Log the body to see what is received
 
-async function create(data) {
-  return await userModel.create(data);
+  try {
+      const user = await userLogic.register(req.body); // Should now receive the correct object
+      res.status(201).json(user);
+  } catch (error) {
+      console.error(error);
+      res.status(400).json({ message: error });
+  }
 }
+ 
+async function login(req, res) {
+  console.log('in login controller', req.body);  // Log the incoming request body
 
-async function read(filter = {}, projection) {
-  return await userModel.find(filter, projection);
+  try {
+      const user = await userLogic.login(req.body); // Pass req.body directly
+      res.status(200).json(user);
+  } catch (error) {
+      console.error('Error in login controller:', error);
+      res.status(401).json({ message: error });
+  }
 }
-
-
-async function update(_id, data) {
-  return await userModel.findByIdAndUpdate(_id, data, {
-    new: true,
-    runValidators: true,
-  });
-}
-async function readOne(filter) {
-  return userModel.findOne(filter)
-}
-
-module.exports = {
-  create,
-  read,
-  update,
-  readOne
-};
-
-
+ 
+ async function readAllUsers(req, res) {
+     try {
+         const users = await userLogic.readAllUsersData();
+         res.status(200).json(users);
+     } catch (error) {
+         console.error(error);
+         res.status(500).json({ message: error });
+     }
+ }
+ 
+ // You can also add other CRUD methods here (update, delete, etc.)
+ 
+ module.exports = {
+     register,
+     login,
+     readAllUsers,
+ };
+ 

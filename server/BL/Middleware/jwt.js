@@ -1,11 +1,16 @@
 
 
 const jwt = require("jsonwebtoken");
+const dotenv = require('dotenv');
+
 //npm install jsonwebtoken
+dotenv.config();
 
 
 //some key to open the token. should be in ".env" file
 const secret = process.env.CONNECTION_STRING
+// const secret = "34534h5jhj65";
+
 
 exports.createToken = (id) => {
   const token = jwt.sign({ id }, secret, { expiresIn: "100m" });

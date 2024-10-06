@@ -2,23 +2,29 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const usersRoutes = require('./routes/usersRouter');
+const exerciseRouter = require('./routes/exerciseRouter');
+const userExerciseRouter = require('./routes/userExerciseRouter');
 
-// ייבוא קובצי הנתיבים
-const signInRoutes = require('./routes/signIn');  // נתיב הכניסה הקיים
-const signUpRoutes = require('./routes/signUp');  // נתיב הרישום החדש
 
 dotenv.config();
 
 // Constants
 const PORT = process.env.PORT;
+//console.log(PORT);
 
 // Create Express server
 const app = express();
 
+
+
 // Middleware
 app.use(express.json());
+// CORS configuration to allow all origins
 app.use(cors({
-  origin: process.env.CLIENT_URL
+  origin: '*', // Allow requests from all origins
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
+  credentials: true, // Allow credentials (cookies, authorization headers, etc.)
 }));
 
 app.use((req, res, next) => {
@@ -27,15 +33,17 @@ app.use((req, res, next) => {
 });
 
 // Routes
-app.use('/api/signIn', signInRoutes);  // הגדרת נתיב /api/signIn
-app.use('/api/signUp', signUpRoutes);  // הגדרת נתיב /api/signUp  <-- הוספנו את נתיב הרישום החדש
+app.use('/api/users', usersRoutes);
+app.use('/api/exercises', exerciseRouter);
+app.use('/api', userExerciseRouter);
+
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
     // listen for requests
     app.listen(PORT, () => {
-      console.log('connected to mongoDB & listening on port', PORT);
+      console.log('connected to mongoDB & listening on port', process.env.PORT);
     });
   }).catch((err) => {
     console.log(err);

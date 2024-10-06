@@ -1,5 +1,4 @@
-const ExerciseLogic = require("../Logic/exerciseLogic"),
-  UserLogic = require("../Logic/userLogic");
+  const UserLogic = require("../Logic/UserLogic/UserLogic");
   // LangLogic = require("../BL/Logic/langLogic");
 
 async function getSingleExercise(_id) {
