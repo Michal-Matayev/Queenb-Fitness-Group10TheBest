@@ -73,12 +73,7 @@ const SignIn = () => {
       console.log("User added successfully");
       console.log("Response:", response);
 
-      // Optionally reset the form
-      // setFormData({
-      //   fullName: "",
-      //   email: "",
-      //   password: "",
-      // });
+   
     } catch (error) {
       console.error("Error fetching data:", error);
     }
